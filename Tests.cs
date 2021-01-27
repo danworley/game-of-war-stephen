@@ -35,29 +35,20 @@ namespace GameOfWar
         }
 
         [Test]
-        public void Something()
+        public void Can_shuffle_deck()
         {
-            var copyOfDeck = deck.ToList();
+            var shuffledDeck = classUnderTest.Shuffle(deck);
+            Assert.That(deck.SequenceEqual(shuffledDeck), Is.False);
+        }
 
-            //Loop 100 times
-            //Get a random value between 0 and 51
-            //Get a random value between 0 and 51
-            //Swap
+        [Test]
+        public void Can_deal_to_two_players()
+        {
+            var shuffledDeck = classUnderTest.Shuffle(deck);
+            var dealtDecks = classUnderTest.Deal(shuffledDeck);
 
-            for(int i = 0; i < 99; i++)
-            {
-                var r1 = new Random();
-                var indexA = r1.Next(0, 51);
-
-                var r2 = new Random();
-                var indexB = r2.Next(0, 51);
-
-                var valueBeingSwapped = copyOfDeck[indexA];
-                copyOfDeck[indexA] = copyOfDeck[indexB];
-                copyOfDeck[indexB] = valueBeingSwapped;
-            }
-
-            Assert.That(copyOfDeck.SequenceEqual(deck), Is.False);
+            Assert.That(dealtDecks.PlayerOne.Count, Is.EqualTo(26));
+            Assert.That(dealtDecks.PlayerTwo.Count, Is.EqualTo(26));
         }
     }
 }
